@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign In Example</title>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyB38zbN1h2OVi1-1NYT9cfbon2zSMt-ew0",
+          authDomain: "https://accounts.google.com/o/oauth2/auth",
+          // The rest of your Firebase config
+        };
+      
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+      
+        // Sign Up function
+        async function signUp() {
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+      
+          try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            alert("Account created successfully!");
+            // You can use userCredential.user here
+          } catch (error) {
+            alert(error.message);
+          }
+        }
+      
+        // Sign In function
+        async function signIn() {
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+      
+          try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            alert("Signed in successfully!");
+            // You can use userCredential.user here
+          } catch (error) {
+            alert(error.message);
+          }
+        }
+      
+        // Expose the signUp and signIn functions to the window object to make them callable from HTML
+        window.signUp = signUp;
+        window.signIn = signIn;
+      </script>
+</head>
+<html>
+<body>
+    <button onclick="window.signUp()">Sign Up</button>
+    <button onclick="window.signIn()">Sign In</button>
+</body>
+</html>
+
