@@ -1,7 +1,7 @@
 import * as express from "express";
 import helmet from "helmet";
 // import dotenv from "dotenv";
-import {publicRouter} from "./route/routes";
+import {router} from "./route/routes";
 import * as admin from "firebase-admin";
 import {config} from "./config/config";
 import * as functions from "firebase-functions";
@@ -27,7 +27,7 @@ app.use(express.json());
 
 // app.use(middleware.checkErrors);
 
-app.use("/v1/", publicRouter);
+app.use("/v1/", router);
 
 app.get("/", (req, res) => {
   res.send("Centro Pastoral API");

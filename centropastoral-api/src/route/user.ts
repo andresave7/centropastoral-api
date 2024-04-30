@@ -10,7 +10,7 @@ router.route("/:userId")
 
 
 router.route("/")
-    .get((req: Request, res: Response, next: NextFunction) => controller.findAll(req, res, next));
-
+    .get((req: Request, res: Response, next: NextFunction) => controller.findAll(req, res, next))
+    .post((req:Request,res:Response,next:NextFunction)=>controller.create(req,res,next))
 
 export default router;

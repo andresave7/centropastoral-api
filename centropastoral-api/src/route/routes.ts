@@ -7,7 +7,7 @@ import subscriptionRoutes from "./subscriptions";
 import purchaseRoutes from "./purchases";
 import categoryRoutes from "./categories";
 import favoriteRoutes from "./favoriates";
-import cartRoutes from "./cart";
+// import cartRoutes from "./cart";
 
 
 import * as express from "express";
@@ -24,7 +24,10 @@ router.use("/subscriptions", apiLimiter, verifyTokenAndAuthorizeAdmin, subscript
 router.use("/purchases", apiLimiter, verifyTokenAndAuthorizeAdmin, purchaseRoutes);
 router.use("/category", apiLimiter, verifyTokenAndAuthorizeAdmin, categoryRoutes);
 router.use("/favorites", apiLimiter, verifyTokenAndAuthorizeAdmin, favoriteRoutes);//change
-router.use("/cart", apiLimiter, verifyTokenAndAuthorizeAdmin, cartRoutes); //change
+// router.use("/cart", apiLimiter, verifyTokenAndAuthorizeAdmin, cartRoutes); //change
+
+
+// router.use("/favorites", apiLimiter, favoriteRoutes);//change
 
 router.use("/auth", apiLimiter, authenticationRoutes);
 
@@ -33,4 +36,4 @@ router.route("/").get((req, res) => {
   res.send("Blank!");
 });
 
-export {publicRouter};
+export {router};

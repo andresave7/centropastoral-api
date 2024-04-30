@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Provide a default port if none is specified in .env
 // app.use(middleware.checkErrors);
-app.use("/v1/", routes_1.publicRouter);
+app.use("/v1/", routes_1.router);
 app.get("/", (req, res) => {
     res.send("Centro Pastoral API");
 });

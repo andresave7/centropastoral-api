@@ -5,7 +5,7 @@ import {User} from "./user";
 import {Subscription} from "./subscriptions";
 import {Order} from "./order";
 import {Purchase} from "./purchases";
-import {Category} from "./category";
+import {Category} from "./categories";
 import {config} from "../config/config";
 import {Role} from "./role";
 
