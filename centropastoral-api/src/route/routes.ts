@@ -27,16 +27,6 @@ router.use("/favorites", apiLimiter, verifyTokenAndAuthorizeAdmin, favoriteRoute
 // router.use("/cart", apiLimiter, verifyTokenAndAuthorizeAdmin, cartRoutes); //change
 
 
-// router.use("/product", productRoutes);
-// router.use("/serie", seriesRoutes);
-// router.use("/user", userRoutes);
-// router.use("/order", orderRoutes);
-// router.use("/subscriptions", subscriptionRoutes);
-// router.use("/purchases", purchaseRoutes);
-// router.use("/category", categoryRoutes)
-// router.use("/favorites", favoriteRoutes);
-// router.use("/cart", cartRoutes); //change
-
 router.use("/auth", apiLimiter, authenticationRoutes);
 
 // Endpoint for connection testing
