@@ -10,7 +10,8 @@ exports.Order = void 0;
 // models/Order.ts
 const sequelize_typescript_1 = require("sequelize-typescript");
 const user_1 = require("./user");
-const models_1 = require("../models");
+const series_1 = require("./series");
+const purchases_1 = require("./purchases");
 let Order = class Order extends sequelize_typescript_1.Model {
 };
 __decorate([
@@ -33,12 +34,9 @@ __decorate([
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING)
 ], Order.prototype, "userId", void 0);
 __decorate([
-    (0, sequelize_typescript_1.ForeignKey)(() => models_1.Purchase),
+    (0, sequelize_typescript_1.ForeignKey)(() => series_1.Series),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING)
-], Order.prototype, "purchaseId", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING)
-], Order.prototype, "paymentToken", void 0);
+], Order.prototype, "seriesId", void 0);
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.DATE
@@ -53,8 +51,11 @@ __decorate([
     (0, sequelize_typescript_1.BelongsTo)(() => user_1.User)
 ], Order.prototype, "user", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => models_1.Purchase)
-], Order.prototype, "purchase", void 0);
+    (0, sequelize_typescript_1.BelongsTo)(() => series_1.Series)
+], Order.prototype, "series", void 0);
+__decorate([
+    (0, sequelize_typescript_1.HasOne)(() => purchases_1.Purchase)
+], Order.prototype, "purchases", void 0);
 Order = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "Order"

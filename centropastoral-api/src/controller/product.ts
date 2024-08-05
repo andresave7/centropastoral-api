@@ -3,6 +3,7 @@
 import {Request, Response, NextFunction} from "express";
 import {Product as model} from "../models";
 import {Series as series} from "../models"; ``;
+import productHandler from "../core/productHandler";
 
 const includeModel = [{
   model: series,
@@ -107,6 +108,24 @@ class ProductController {
       }
     }
   }
+
+  public async getDonwloadLink(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const link =await productHandler.getProductLink(req.params.productId,req.params.userId);
+      res.json(link);
+    } catch (error ) {
+      if (error instanceof Error) {
+        res.status(500).send(error.message);
+      } else {
+        res.status(500).send("An unexpected error occurred");
+      }
+    }
+  }
+
 }
+
+
+
+
 
 export default new ProductController();

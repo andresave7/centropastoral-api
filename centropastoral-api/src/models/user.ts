@@ -1,6 +1,5 @@
 import { Table, Column, Model, DataType, ForeignKey, BelongsTo, CreatedAt, UpdatedAt} from 'sequelize-typescript';
 import { Role   } from './role';
-import { Subscription } from './subscriptions'; 
 
 @Table({
   tableName: "User"
@@ -41,12 +40,8 @@ export class User extends Model<User> {
   @BelongsTo(() => Role)
   role?: Role;
 
-  @ForeignKey(() => Subscription)
   @Column(DataType.STRING)
-  subscriptionId!: string;
-
-  @BelongsTo(() => Subscription)
-  subscription?: Subscription;
+  stripeId!: string;
 
   @CreatedAt
   createdAt!: Date;

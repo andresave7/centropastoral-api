@@ -10,5 +10,9 @@ router.route("/:orderId")
     .get((req, res, next) => order_1.default.findOne(req, res, next))
     .delete((req, res, next) => order_1.default.destroy(req, res, next))
     .put((req, res, next) => order_1.default.update(req, res, next));
+router.route("/pending/:userId")
+    .get((req, res, next) => order_1.default.findPendingByUser(req, res, next));
+router.route("/completed/:userId")
+    .get((req, res, next) => order_1.default.findCompletedByUser(req, res, next));
 exports.default = router;
 //# sourceMappingURL=order.js.map

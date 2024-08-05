@@ -8,6 +8,9 @@ router.route("/:userId")
     .put((req, res, next) => user_1.default.update(req, res, next))
     .delete((req, res, next) => user_1.default.destroy(req, res, next));
 router.route("/")
-    .get((req, res, next) => user_1.default.findAll(req, res, next));
+    .get((req, res, next) => user_1.default.findAll(req, res, next))
+    .post((req, res, next) => user_1.default.create(req, res, next));
+router.route("/products/:userId")
+    .get((req, res, next) => user_1.default.getUserProducts(req, res, next));
 exports.default = router;
 //# sourceMappingURL=user.js.map

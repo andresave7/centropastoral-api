@@ -3,6 +3,7 @@ import {Request, Response, NextFunction} from "express";
 import {User as model} from "../models";
 import {Role as role} from "../models";
 import {Subscription as subscription} from "../models";
+import productHandler from "../core/productHandler";
 
 const includeModel = [{
   model: role,
@@ -44,9 +45,8 @@ class UserController {
   public async findOne(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const dbresponse = await model.findByPk(req.params.userId, {include: includeModel});
-      if (!dbresponse) {
-        throw "Invalid user";
-      }
+      if (!dbresponse) 
+        res.status(404).send("Invalid user");
       res.json(dbresponse);
     } catch (error ) {
       if (error instanceof Error) {
@@ -115,6 +115,19 @@ class UserController {
         res.status(500).send("An unexpected error occurred");
       }
     }
+  }
+  
+  public async getUserProducts(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const series = await productHandler.getUserProducts(req.params.userId)
+      res.json(series)
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).send(error.message);
+      } else {
+        res.status(500).send("An unexpected error occurred");
+      }
+    }    
   }
 }
 

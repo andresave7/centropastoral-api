@@ -1,12 +1,12 @@
 // models/Purchase.ts
 import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { User } from './user';
-import { Series } from './series';
+import { Order } from './order';
 
 @Table({
   tableName:"Purchase"
 })
-export class Purchase extends Model<Purchase> {
+export class Purchase extends Model {
   @Column({
     primaryKey: true,
     type: DataType.STRING
@@ -17,27 +17,26 @@ export class Purchase extends Model<Purchase> {
   @Column(DataType.STRING)
   userId!: string;
 
-  @ForeignKey(() => Series)
+  @ForeignKey(() => Order)
   @Column(DataType.STRING)
-  seriesId!: string;
+  orderId!: string;
+
+  @Column(DataType.STRING)
+  paymentToken!:string
 
   @Column(DataType.DATE)
   purchaseDate!: Date;
 
-  @Column({
-    type: DataType.DATE
-  })
+  @Column({type: DataType.DATE,defaultValue: DataType.NOW})
   createdAt!: Date;
 
-  @Column({
-    type: DataType.DATE
-  })
+  @Column({type: DataType.DATE,defaultValue: DataType.NOW})
   updatedAt!: Date;
   
   @BelongsTo(() => User)
   user?: User;
 
-  @BelongsTo(() => Series)
-  series?: Series;
+  @BelongsTo(() => Order)
+  order?: Order;
 
 }

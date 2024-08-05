@@ -14,5 +14,5 @@ class PaymentClientFactory {
         }
     }
 }
-exports.default = new PaymentClientFactory();
+exports.default = PaymentClientFactory;
 //# sourceMappingURL=paymentClientFactory.js.map

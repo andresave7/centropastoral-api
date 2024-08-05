@@ -3,6 +3,8 @@ import {Request, Response, NextFunction} from "express";
 import {Purchase as model} from "../models";
 import {Series as series} from "../models";
 import {Product as product} from "../models";
+import {PaymentHandler} from "../core/paymentHandler";
+
 
 const includeModel = [{
   model: series,
@@ -43,9 +45,8 @@ class PurchaseController {
   public async findOne(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const dbresponse = await model.findByPk(req.params.purchaseId, {include: includeModel});
-      if (!dbresponse) {
-        throw "empty";
-      }
+      if (!dbresponse)  
+        res.status(404).send("Invalid purchase");
       res.json(dbresponse);
     } catch (error ) {
       if (error instanceof Error) {
@@ -70,8 +71,13 @@ class PurchaseController {
 
   public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const dbresponse = await model.create(req.body);
-      res.json(dbresponse);
+      const result = await new PaymentHandler(req.body,res).validateAndprocess()
+      if(result.status){
+        const purchaseData={purchaseId:result.id,userId:req.body.userId,orderId:req.body.orderId,paymentToken:result.sourceId,purchaseDate:new Date()}
+        const dbresponse = await model.create(purchaseData);
+        res.json(dbresponse);
+      }else
+        res.status(500).send("Failed to process payment");
     } catch (error ) {
       if (error instanceof Error) {
         res.status(500).send(error.message);

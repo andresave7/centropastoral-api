@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.publicRouter = void 0;
+exports.router = void 0;
 const product_1 = require("./product");
 const series_1 = require("./series");
 const user_1 = require("./user");
@@ -8,28 +8,34 @@ const authentication_1 = require("./authentication");
 const order_1 = require("./order");
 const subscriptions_1 = require("./subscriptions");
 const purchases_1 = require("./purchases");
-const category_1 = require("./category");
+const categories_1 = require("./categories");
+const favorites_1 = require("./favorites");
+// import cartRoutes from "./cart";
 const express = require("express");
 const middleware_1 = require("../middleware/middleware");
-const publicRouter = express.Router();
-exports.publicRouter = publicRouter;
-publicRouter.use("/product", middleware_1.apiLimiter, product_1.default);
-publicRouter.use("/serie", middleware_1.apiLimiter, middleware_1.verifyTokenAndAuthorizeAdmin, series_1.default);
-publicRouter.use("/user", middleware_1.apiLimiter, middleware_1.verifyTokenAndAuthorizeAdmin, user_1.default);
-publicRouter.use("/order", middleware_1.apiLimiter, middleware_1.verifyTokenAndAuthorizeAdmin, order_1.default);
-publicRouter.use("/subscriptions", middleware_1.apiLimiter, middleware_1.verifyTokenAndAuthorizeAdmin, subscriptions_1.default);
-publicRouter.use("/purchases", middleware_1.apiLimiter, middleware_1.verifyTokenAndAuthorizeAdmin, purchases_1.default);
-publicRouter.use("/category", middleware_1.apiLimiter, middleware_1.verifyTokenAndAuthorizeAdmin, category_1.default);
-// publicRouter.use('/product', apiLimiter,   productRoutes);
-// publicRouter.use('/serie', apiLimiter, seriesRoutes);
-// publicRouter.use('/user',apiLimiter, userRoutes);
-// publicRouter.use('/order',apiLimiter, orderRoutes);
-// publicRouter.use('/subscription',apiLimiter, subscriptionRoutes);
-// publicRouter.use('/purchase',apiLimiter, purchaseRoutes);
-// publicRouter.use('/category',apiLimiter, categoryRoutes);
-publicRouter.use("/auth", middleware_1.apiLimiter, authentication_1.default);
+const router = express.Router();
+exports.router = router;
+// router.use("/product", apiLimiter, productRoutes);
+// router.use("/serie", apiLimiter, verifyTokenAndAuthorizeAdmin, seriesRoutes);
+// router.use("/user", apiLimiter, verifyTokenAndAuthorizeAdmin, userRoutes);
+// router.use("/order", apiLimiter, verifyTokenAndAuthorizeAdmin, orderRoutes);
+router.use("/subscriptions", middleware_1.apiLimiter, middleware_1.verifyTokenAndAuthorizeAdmin, subscriptions_1.default);
+// router.use("/purchases", apiLimiter, verifyTokenAndAuthorizeAdmin, purchaseRoutes);
+// router.use("/category", apiLimiter, verifyTokenAndAuthorizeAdmin, categoryRoutes);
+// router.use("/favorites", apiLimiter, verifyTokenAndAuthorizeAdmin, favoriteRoutes);//change
+// router.use("/cart", apiLimiter, verifyTokenAndAuthorizeAdmin, cartRoutes); //change
+router.use("/product", product_1.default);
+router.use("/serie", series_1.default);
+router.use("/user", user_1.default);
+router.use("/order", order_1.default);
+router.use("/subscriptions", subscriptions_1.default);
+router.use("/purchases", purchases_1.default);
+router.use("/category", categories_1.default);
+router.use("/favorites", favorites_1.default);
+// router.use("/cart", cartRoutes); //change
+router.use("/auth", middleware_1.apiLimiter, authentication_1.default);
 // Endpoint for connection testing
-publicRouter.route("/").get((req, res) => {
+router.route("/").get((req, res) => {
     res.send("Blank!");
 });
 //# sourceMappingURL=routes.js.map

@@ -3,20 +3,18 @@ import * as admin from "firebase-admin";
 import {Request, Response, NextFunction} from "express";
 //import {User} from "../models/user";
 
-const verifyTokenAndAuthorizeAdmin = async (req: Request, res: Response, next: NextFunction) => {
+interface AuthRequest extends Request {
+  firebaseId?: string;
+}
+
+const verifyTokenAndAuthorizeAdmin = async (req: AuthRequest, res: Response, next: NextFunction) => {
   const authorizationHeader = req.headers.authorization;
-  if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
+  if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) 
     return res.status(403).send("Unauthorized");
-  }
-
   const idToken = authorizationHeader.split("Bearer ")[1];
-
   try {
-    console.log(idToken);
     const decodedToken = await admin.auth().verifyIdToken(idToken);
-    console.log("uid", decodedToken.uid);
-
-
+    req.firebaseId=decodedToken.uid;
     // const user = await User.findOne({ where: { email: decodedToken.email } });
     // if (!user) {
     //   return res.status(404).send("User not found");

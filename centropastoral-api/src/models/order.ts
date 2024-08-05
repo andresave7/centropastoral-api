@@ -1,7 +1,8 @@
 // models/Order.ts
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, HasOne} from 'sequelize-typescript';
 import { User } from './user';
-import { Purchase } from '../models';
+import { Series } from './series';
+import { Purchase } from './purchases';
 
 @Table({
   tableName:"Order"
@@ -26,12 +27,9 @@ export class Order extends Model<Order> {
   @Column(DataType.STRING)
   userId!: string;
 
-  @ForeignKey(() => Purchase)
+  @ForeignKey(() => Series)
   @Column(DataType.STRING)
-  purchaseId!: string;
-
-  @Column( DataType.STRING)
-  paymentToken!: string;
+  seriesId!: string;
 
   @Column({
     type: DataType.DATE
@@ -46,7 +44,10 @@ export class Order extends Model<Order> {
   @BelongsTo(() => User)
   user?: User;
 
-  @BelongsTo(() => Purchase)
-  purchase?: Purchase;
+  @BelongsTo(() => Series)
+  series?: Series;
+
+  @HasOne(() => Purchase)
+  purchases?: Purchase[];
 
 }

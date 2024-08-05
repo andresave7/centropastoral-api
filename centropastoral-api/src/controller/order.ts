@@ -49,9 +49,8 @@ class OrderController {
   public async findOne(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const dbresponse = await model.findByPk(req.params.orderId, {include: includeModel});
-      if (!dbresponse) {
-        throw "empty";
-      }
+      if (!dbresponse)
+        res.status(404).send("Invalid Order");
       res.json(dbresponse);
     } catch (error ) {
       if (error instanceof Error) {
@@ -114,6 +113,40 @@ class OrderController {
         res.status(404).send("Order not found");
       }
     } catch (error ) {
+      if (error instanceof Error) {
+        res.status(500).send(error.message);
+      } else {
+        res.status(500).send("An unexpected error occurred");
+      }
+    }
+  }
+
+  public async findPendingByUser (req: Request, res: Response, next: NextFunction):Promise<void>{
+    try {
+      const dbresponse = await model.findAll({
+        where:{userId:req.params.userId},
+        include:[{model:Purchase,required:false,attributes:[]}],
+        having: {'$Purchase.orderId$': null}
+      });
+      res.json(dbresponse);
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(500).send(error.message);
+      } else {
+        res.status(500).send("An unexpected error occurred");
+      }
+    }
+  }
+
+
+  public async findCompletedByUser (req: Request, res: Response, next: NextFunction):Promise<void>{
+    try {
+      const dbresponse = await model.findAll({
+        include:[{model:Purchase,required:true}],
+        where:{userId:req.params.userId}
+      });
+      res.json(dbresponse);
+    } catch (error) {
       if (error instanceof Error) {
         res.status(500).send(error.message);
       } else {

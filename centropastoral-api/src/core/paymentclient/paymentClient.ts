@@ -1,3 +1,3 @@
 interface PaymentClient {
-    processPayment(amount: number): void;
+    processPayment(data:any): Promise<any>;
 }

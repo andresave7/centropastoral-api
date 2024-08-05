@@ -64,3 +64,9 @@ node_modules/
 
 # dotenv environment variables file
 .env
+# generated files
+lib/
+centropastoral/lib
+centropastoral-api/lib/*
+package-lock.json
+*.map

@@ -14,4 +14,4 @@ class PaymentClientFactory {
   }
 }
 
-export default new PaymentClientFactory();
+export default  PaymentClientFactory;

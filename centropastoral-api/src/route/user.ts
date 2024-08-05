@@ -1,4 +1,5 @@
 import controller from "../controller/user";
+
 import {Router, Request, Response, NextFunction} from "express";
 
 const router = Router();
@@ -12,5 +13,8 @@ router.route("/:userId")
 router.route("/")
     .get((req: Request, res: Response, next: NextFunction) => controller.findAll(req, res, next))
     .post((req:Request,res:Response,next:NextFunction)=>controller.create(req,res,next))
+
+router.route("/products/:userId")
+    .get((req: Request, res: Response, next: NextFunction) => controller.getUserProducts(req, res, next))
 
 export default router;

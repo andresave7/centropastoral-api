@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const models_1 = require("../models");
 const models_2 = require("../models");
 const models_3 = require("../models");
+const paymentHandler_1 = require("../core/paymentHandler");
 const includeModel = [{
         model: models_2.Series,
         as: "series",
@@ -41,9 +42,8 @@ class PurchaseController {
     async findOne(req, res, next) {
         try {
             const dbresponse = await models_1.Purchase.findByPk(req.params.purchaseId, { include: includeModel });
-            if (!dbresponse) {
-                throw "empty";
-            }
+            if (!dbresponse)
+                res.status(404).send("Invalid purchase");
             res.json(dbresponse);
         }
         catch (error) {
@@ -70,8 +70,14 @@ class PurchaseController {
     }
     async create(req, res, next) {
         try {
-            const dbresponse = await models_1.Purchase.create(req.body);
-            res.json(dbresponse);
+            const result = await new paymentHandler_1.PaymentHandler(req.body, res).validateAndprocess();
+            if (result.status) {
+                const purchaseData = { purchaseId: result.id, userId: req.body.userId, orderId: req.body.orderId, paymentToken: result.sourceId, purchaseDate: new Date() };
+                const dbresponse = await models_1.Purchase.create(purchaseData);
+                res.json(dbresponse);
+            }
+            else
+                res.status(500).send("Failed to process payment");
         }
         catch (error) {
             if (error instanceof Error) {

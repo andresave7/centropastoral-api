@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const role_1 = require("./role");
-const subscriptions_1 = require("./subscriptions");
 let User = class User extends sequelize_typescript_1.Model {
 };
 __decorate([
@@ -48,12 +47,8 @@ __decorate([
     (0, sequelize_typescript_1.BelongsTo)(() => role_1.Role)
 ], User.prototype, "role", void 0);
 __decorate([
-    (0, sequelize_typescript_1.ForeignKey)(() => subscriptions_1.Subscription),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING)
-], User.prototype, "subscriptionId", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => subscriptions_1.Subscription)
-], User.prototype, "subscription", void 0);
+], User.prototype, "stripeId", void 0);
 __decorate([
     sequelize_typescript_1.CreatedAt
 ], User.prototype, "createdAt", void 0);

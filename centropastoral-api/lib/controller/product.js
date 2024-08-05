@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const models_1 = require("../models");
 const models_2 = require("../models");
 ``;
+const productHandler_1 = require("../core/productHandler");
 const includeModel = [{
         model: models_2.Series,
         as: "series",
@@ -104,6 +105,20 @@ class ProductController {
             else {
                 res.status(404).send("Product not found");
             }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                res.status(500).send(error.message);
+            }
+            else {
+                res.status(500).send("An unexpected error occurred");
+            }
+        }
+    }
+    async getDonwloadLink(req, res, next) {
+        try {
+            const link = await productHandler_1.default.getProductLink(req.params.productId, req.params.userId);
+            res.json(link);
         }
         catch (error) {
             if (error instanceof Error) {

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const models_1 = require("../models");
 const models_2 = require("../models");
 const models_3 = require("../models");
+const productHandler_1 = require("../core/productHandler");
 const includeModel = [{
         model: models_2.Role,
         as: "role",
@@ -41,9 +42,8 @@ class UserController {
     async findOne(req, res, next) {
         try {
             const dbresponse = await models_1.User.findByPk(req.params.userId, { include: includeModel });
-            if (!dbresponse) {
-                throw "Invalid user";
-            }
+            if (!dbresponse)
+                res.status(404).send("Invalid user");
             res.json(dbresponse);
         }
         catch (error) {
@@ -111,6 +111,20 @@ class UserController {
             else {
                 res.status(404).send("User not found");
             }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                res.status(500).send(error.message);
+            }
+            else {
+                res.status(500).send("An unexpected error occurred");
+            }
+        }
+    }
+    async getUserProducts(req, res, next) {
+        try {
+            const series = await productHandler_1.default.getUserProducts(req.params.userId);
+            res.json(series);
         }
         catch (error) {
             if (error instanceof Error) {

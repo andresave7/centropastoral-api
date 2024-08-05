@@ -8,6 +8,7 @@ import {Purchase} from "./purchases";
 import {Category} from "./categories";
 import {config} from "../config/config";
 import {Role} from "./role";
+import {Favorites} from "./favorites";
 
 const sequelize = new Sequelize({
   database: config.apiDb.database,
@@ -15,7 +16,7 @@ const sequelize = new Sequelize({
   dialect: "mysql",
   username: config.apiDb.user,
   password: config.apiDb.password,
-  models: [User, Product, Series, Subscription, Order, Purchase, Role, Category],
+  models: [User, Product, Series, Subscription, Order, Purchase, Role, Category,Favorites],
 });
 
 const db = {
@@ -31,5 +32,6 @@ export {
   Purchase,
   Role,
   Category,
+  Favorites,
   db,
 };

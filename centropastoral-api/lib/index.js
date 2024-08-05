@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.storage = void 0;
 const express = require("express");
 const helmet_1 = require("helmet");
 // import dotenv from "dotenv";
@@ -14,6 +15,7 @@ const serviceAccount = config_1.config.firebaseConfig;
 app.use(cors({ origin: true }));
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
+    storageBucket: serviceAccount.storageBucket
 });
 app.use((0, helmet_1.default)());
 app.use(express.urlencoded({ extended: true }));
@@ -29,5 +31,6 @@ app.get("/", (req, res) => {
 //   console.log(`App (${process.env.NODE_ENV}) 
 //   listening on port: ${port}`);
 // });
+exports.storage = admin.storage().bucket();
 exports.api = functions.https.onRequest(app);
 //# sourceMappingURL=index.js.map

@@ -4,7 +4,7 @@ exports.PayPalClient = void 0;
 class PayPalClient {
     constructor() {
     }
-    processPayment(amount) {
+    async processPayment(amount) {
         console.log(`Processing ${amount} with PayPal`);
         // Implementation specific to PayPal
     }

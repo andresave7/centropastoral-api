@@ -12,4 +12,7 @@ router.route("/:productId")
     .delete((req: Request, res: Response, next: NextFunction) => controller.destroy(req, res, next))
     .put((req: Request, res: Response, next: NextFunction) => controller.update(req, res, next));
 
+router.route("/download/:productId/:userId")
+    .get((req: Request, res: Response, next: NextFunction) => controller.getDonwloadLink(req, res, next))
+
 export default router;

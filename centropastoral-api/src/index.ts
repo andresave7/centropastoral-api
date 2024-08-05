@@ -17,6 +17,7 @@ app.use(cors({ origin: true }));
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
+  storageBucket: serviceAccount.storageBucket
 });
 
 app.use(helmet());
@@ -38,6 +39,6 @@ app.get("/", (req, res) => {
 //   console.log(`App (${process.env.NODE_ENV}) 
 //   listening on port: ${port}`);
 // });
-
+export const storage = admin.storage().bucket();
 
 exports.api = functions.https.onRequest(app);
